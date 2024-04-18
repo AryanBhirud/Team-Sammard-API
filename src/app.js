@@ -27,8 +27,7 @@ app.use(express.json());
 //   });
 // });
 router.get('/', (req, res) => {
-  const documentationPath = path.join(__dirname, 'api_documentation.md');
-  const htmlContent = renderMarkdownFile(documentationPath);
+  const htmlContent = renderMarkdownFile("../api/api_documentation.md");
   res.send(htmlContent);
 });
 
