@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const marked = require('marked');
 
 require('dotenv').config();
 
@@ -10,15 +11,25 @@ const api = require('./api');
 
 const app = express();
 
+function renderMarkdownFile(filePath) {
+  const markdownContent = fs.readFileSync(filePath, 'utf8');
+  return marked(markdownContent);
+}
+
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
+// app.get('/', (req, res) => {
+//   res.json({
+//     message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
+//   });
+// });
+router.get('/', (req, res) => {
+  const documentationPath = path.join(__dirname, 'api_documentation.md');
+  const htmlContent = renderMarkdownFile(documentationPath);
+  res.send(htmlContent);
 });
 
 app.use('/datapacket', api);
