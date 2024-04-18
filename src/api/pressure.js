@@ -1,4 +1,5 @@
 const express = require("express");
+const getHumidity = require("./humidity");
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ function getPressure() {
 
     if (elapsedTime < x) {
         pressure = (Math.random() * (38 - 35 + 1) + 15).toFixed(2);
-    }else {
+    } else {
         pressure = (Math.random() * (45 - 10 + 1) + 10).toFixed(2);
     }
 
@@ -22,9 +23,9 @@ function getPressure() {
 }
 
 router.get("/", (req, res) => {
-    const { timestamp, pressure } = getPressure();
+    const { timestamp, pressure } = getPressure();  
     const responseData = { timestamp, pressure };
     res.json(responseData);
 });
 
-module.exports = router;
+module.exports =router;

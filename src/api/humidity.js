@@ -8,7 +8,6 @@ function getHumidity() {
     var m = date.getMilliseconds();
     const currentTime = s + m;
     const humidity = (Math.random() * (38 - 35 + 1) + 20).toFixed(2);
-    
 
     return { timestamp: currentTime, humidity: humidity };
 }
@@ -19,4 +18,4 @@ router.get("/", (req, res) => {
     res.json(responseData);
 });
 
-module.exports = router;
+module.exports =router;

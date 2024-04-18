@@ -30,4 +30,4 @@ router.get("/", (req, res) => {
     res.json(responseData);
 });
 
-module.exports = router;
+module.exports =router;
