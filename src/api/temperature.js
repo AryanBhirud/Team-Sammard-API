@@ -1,27 +1,32 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
 function getTemp() {
     const x = 10;
     const y = 15;
-    const z = 60; 
-    
-    const currentTime = (new Date().getTime() / 1000);
+    const z = 60;
+    var date = new Date();
+    var s = date.getSeconds() * 1000;
+    var m = date.getMilliseconds();
+    const currentTime = s + m;
     const elapsedTime = currentTime % z;
-    
+    let temperature;
+
     if (elapsedTime < x) {
-        return ((Math.random() * (45 - 20 + 1)) + 20).toFixed(2);
+        temperature = (Math.random() * (45 - 20 + 1) + 20).toFixed(2);
     } else if (elapsedTime < x + y) {
-        return ((Math.random() * (35 - 10 + 1)) + 10).toFixed(2);
+        temperature = (Math.random() * (35 - 10 + 1) + 10).toFixed(2);
     } else {
-        return ((Math.random() * (45 - 10 + 1)) + 10).toFixed(2);
+        temperature = (Math.random() * (45 - 10 + 1) + 10).toFixed(2);
     }
+
+    return { timestamp: currentTime, temperature: temperature };
 }
 
-router.get('/', (req, res) => {
-    const temperature = getTemp();
-    const responseData = { temperature };
+router.get("/", (req, res) => {
+    const { timestamp, temperature } = getTemp();
+    const responseData = { timestamp, temperature };
     res.json(responseData);
 });
 
