@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Sammard's Testing API Documentation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2, h3, p {
+      margin-bottom: 10px;
+    }
+    .endpoint {
+      margin-bottom: 20px;
+    }
+    .response {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Team Sammard's Testing API Documentation</h1>
+  <p>Welcome to the documentation for Team Sammard's testing API. This API provides access to various resources and functionalities necessary to simulate and test codes and software.</p>
+    <hr>
+  <h2>Endpoints</h2>
+
+  <!-- Iterate through each endpoint -->
+  <!-- Datapacket temperature endpoint -->
+  <div class="endpoint">
+    <h3>Retrieve Temperature Data</h3>
+    <p>This endpoint retrieves temperature data, along with the timestamp.</p>
+    <p><strong>URL:</strong> https://team-sammard.vercel.app/datapacket/temperature</p>
+    <p><strong>Method:</strong> GET</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <p><strong>timestamp:</strong> The timestamp indicating when the temperature data was retrieved, in seconds.</p>
+      <p><strong>temperature:</strong> The temperature value in Celsius of the payload onboard the rocket.</p>
+    </div>
+  </div>
+  <hr>
+  <!-- Datapacket humidity endpoint -->
+  <div class="endpoint">
+    <h3>Retrieve Humidity Data</h3>
+    <p>This endpoint retrieves humidity data.</p>
+    <p><strong>URL:</strong> https://team-sammard.vercel.app/datapacket/humidity</p>
+    <p><strong>Method:</strong> GET</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <p><strong>timestamp:</strong> The timestamp indicating when the humidity data was retrieved, in seconds.</p>
+      <p><strong>humidity:</strong> The humidity value as a percentage.</p>
+    </div>
+  </div>
+  <hr>
+  <!-- Datapacket pressure endpoint -->
+  <div class="endpoint">
+    <h3>Retrieve Pressure Data</h3>
+    <p>This endpoint retrieves pressure data.</p>
+    <p><strong>URL:</strong> https://team-sammard.vercel.app/datapacket/pressure</p>
+    <p><strong>Method:</strong> GET</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <p><strong>timestamp:</strong> The timestamp indicating when the pressure data was retrieved, in seconds.</p>
+      <p><strong>pressure:</strong> The pressure value in hectopascals (hPa).</p>
+    </div>
+  </div>
+<hr>
+  <!-- Example usage section -->
+  <h2>Example Usage</h2>
+
+  <!-- Example usage for retrieve temperature data -->
+  <div class="endpoint">
+    <h3>Retrieve Temperature Data</h3>
+    <p>Description: Retrieve Temperature Data</p>
+    <p><strong>URL:</strong> <a href="https://team-sammard.vercel.app/datapacket/temperature">https://team-sammard.vercel.app/datapacket/temperature</a></p>
+    <p><strong>Method:</strong> GET</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <p><strong>timestamp:</strong> 1648834567</p>
+      <p><strong>temperature:</strong> 25.3</p>
+    </div>
+  </div>
+</body>
+</html>
