@@ -14,7 +14,7 @@ function getTemp() {
     let temperature;
 
     if (elapsedTime < x) {
-        temperature = (Math.random() * (45 - 20 + 1) + 20).toFixed(2);
+        temperature = (Math.random() * (38 - 35 + 1) + 20).toFixed(2);
     } else if (elapsedTime < x + y) {
         temperature = (Math.random() * (35 - 10 + 1) + 10).toFixed(2);
     } else {
