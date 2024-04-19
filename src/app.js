@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/',(req, res) => {
-  res.render('index.ejs');
+  res.json("Team Sammard's Testing API Documentation");
 });
 
 app.use('/datapacket', api);
