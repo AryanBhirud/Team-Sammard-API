@@ -14,6 +14,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
+app.set('views', './views')
 
 app.use(morgan('dev'));
 app.use(helmet());
@@ -21,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/',(req, res) => {
-  res.render('index');
+  res.render('index.ejs');
 });
 
 app.use('/datapacket', api);
