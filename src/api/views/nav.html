@@ -69,17 +69,24 @@
             }
         }
 
-        // Function to start GPS tracking and device orientation updates
+        // Function to start GPS tracking and request device orientation permissions
         function startTracking() {
+            // Geolocation permission
             if (navigator.geolocation) {
-                navigator.geolocation.watchPosition((position) => {
-                    updateArrow(position);
+                navigator.permissions.query({ name: 'geolocation' }).then(function(permissionStatus) {
+                    if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
+                        navigator.geolocation.watchPosition((position) => {
+                            updateArrow(position);
+                        });
+                    } else {
+                        alert('Geolocation permission denied.');
+                    }
                 });
             } else {
                 alert('Geolocation is not supported by your browser.');
             }
 
-            // Request permission for device orientation
+            // Device orientation permission for iOS
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
@@ -91,7 +98,7 @@
                     })
                     .catch(console.error);
             } else {
-                // For non-iOS devices that don't need permission request
+                // Non-iOS devices: No need for explicit permission, just use deviceorientation directly
                 window.addEventListener('deviceorientation', handleOrientation);
             }
         }
