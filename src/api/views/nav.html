@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direction to Destination</title>
+    <title>GPS Arrow</title>
     <style>
         *{
             background-color: black;
             color: white;
         }
-
-        #arrow {
-            width: 100px;
-            height: 100px;
-            transform-origin: center;
-        }
     </style>
 </head>
 <body>
-    <div>
-        <!-- Use relative path for the image in public folder -->
-        <img id="arrow" src="/arrow.png" alt="Arrow">
-        <p id="distance-info"></p>
-        hello world
-    </div>
+    <h1>GPS Arrow</h1>
+    <img id="arrow" src="/arrow.png" alt="Arrow" style="width:100px;height:100px;">
+    <p id="distance-info"></p>
+
     <script>
         const destination = { lat: 40.748817, lng: -73.985428 }; // Example: New York coordinates
+        let userHeading = 0; // Default heading (if device orientation fails)
 
+        // Function to calculate distance and bearing between two GPS coordinates
         function getDistanceAndBearing(userPosition) {
             const R = 6371e3; // Earth's radius in meters
             const lat1 = userPosition.coords.latitude * Math.PI / 180;
@@ -54,26 +48,55 @@
             return { distance, bearing };
         }
 
+        // Function to update the arrow based on position and heading
         function updateArrow(userPosition) {
             const { distance, bearing } = getDistanceAndBearing(userPosition);
+            const arrow = document.getElementById('arrow');
+            const distanceInfo = document.getElementById('distance-info');
 
-            const heading = event.alpha || 0; // User's compass heading
-            const arrowRotation = bearing - heading;
+            // Update the distance text
+            distanceInfo.textContent = `${Math.round(distance)}m to your ${bearing > userHeading ? 'right' : 'left'}`;
 
-            document.getElementById('arrow').style.transform = `rotate(${arrowRotation}deg)`;
-            document.getElementById('distance-info').textContent = `${Math.round(distance)}m to your ${arrowRotation > 0 ? 'right' : 'left'}`;
+            // Calculate arrow rotation
+            const arrowRotation = bearing - userHeading;
+            arrow.style.transform = `rotate(${arrowRotation}deg)`;
         }
 
+        // Function to handle compass heading (device orientation)
+        function handleOrientation(event) {
+            if (event.alpha !== null) {
+                userHeading = event.alpha; // Alpha represents compass heading
+            }
+        }
+
+        // Function to start GPS tracking and device orientation updates
         function startTracking() {
-            navigator.geolocation.watchPosition((position) => {
-                updateArrow(position);
-            });
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition((position) => {
+                    updateArrow(position);
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
 
-            window.addEventListener('deviceorientation', (event) => {
-                // Re-run with heading data
-            });
+            // Request permission for device orientation
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientation);
+                        } else {
+                            alert('Permission to access device orientation was denied.');
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                // For non-iOS devices that don't need permission request
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
         }
 
+        // Start tracking once the page loads
         window.onload = startTracking;
     </script>
 </body>
