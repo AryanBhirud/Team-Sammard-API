@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Direction to Destination</title>
     <style>
+        *{
+            background-color: black;
+            color: white;
+        }
+
         #arrow {
             width: 100px;
             height: 100px;
@@ -14,10 +19,11 @@
 </head>
 <body>
     <div>
-        <img id="arrow" src="arrow.png" alt="Arrow">
+        <!-- Use relative path for the image in public folder -->
+        <img id="arrow" src="/arrow.png" alt="Arrow">
         <p id="distance-info"></p>
+        hello world
     </div>
-
     <script>
         const destination = { lat: 40.748817, lng: -73.985428 }; // Example: New York coordinates
 

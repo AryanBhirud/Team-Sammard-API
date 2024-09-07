@@ -5,7 +5,9 @@ const temperature = require('./temperature');
 const humidity = require('./humidity');
 const pressure = require('./pressure');
 const nav = require('./nav');
+const path = require('path');
 const router = express.Router();
+
 
 function getHumidity() {
   var date = new Date();
