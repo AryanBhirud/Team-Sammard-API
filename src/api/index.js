@@ -4,6 +4,7 @@ const emojis = require('./emojis');
 const temperature = require('./temperature');
 const humidity = require('./humidity');
 const pressure = require('./pressure');
+const nav = require('./nav');
 const router = express.Router();
 
 function getHumidity() {
@@ -70,5 +71,6 @@ router.get("/", (req, res) => {
 router.use('/temperature', temperature);
 router.use('/humidity', humidity);
 router.use('/pressure', pressure);
+router.use('./nav', nav);
 
 module.exports = router;

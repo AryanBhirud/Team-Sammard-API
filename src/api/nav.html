@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direction to Destination</title>
+    <style>
+        #arrow {
+            width: 100px;
+            height: 100px;
+            transform-origin: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img id="arrow" src="arrow.png" alt="Arrow">
+        <p id="distance-info"></p>
+    </div>
+
+    <script>
+        const destination = { lat: 40.748817, lng: -73.985428 }; // Example: New York coordinates
+
+        function getDistanceAndBearing(userPosition) {
+            const R = 6371e3; // Earth's radius in meters
+            const lat1 = userPosition.coords.latitude * Math.PI / 180;
+            const lon1 = userPosition.coords.longitude * Math.PI / 180;
+            const lat2 = destination.lat * Math.PI / 180;
+            const lon2 = destination.lng * Math.PI / 180;
+
+            const deltaLat = lat2 - lat1;
+            const deltaLon = lon2 - lon1;
+
+            const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                      Math.cos(lat1) * Math.cos(lat2) *
+                      Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            const distance = R * c; // Distance in meters
+
+            const y = Math.sin(deltaLon) * Math.cos(lat2);
+            const x = Math.cos(lat1) * Math.sin(lat2) -
+                      Math.sin(lat1) * Math.cos(lat2) * Math.cos(deltaLon);
+
+            const bearing = Math.atan2(y, x) * 180 / Math.PI; // Bearing in degrees
+
+            return { distance, bearing };
+        }
+
+        function updateArrow(userPosition) {
+            const { distance, bearing } = getDistanceAndBearing(userPosition);
+
+            const heading = event.alpha || 0; // User's compass heading
+            const arrowRotation = bearing - heading;
+
+            document.getElementById('arrow').style.transform = `rotate(${arrowRotation}deg)`;
+            document.getElementById('distance-info').textContent = `${Math.round(distance)}m to your ${arrowRotation > 0 ? 'right' : 'left'}`;
+        }
+
+        function startTracking() {
+            navigator.geolocation.watchPosition((position) => {
+                updateArrow(position);
+            });
+
+            window.addEventListener('deviceorientation', (event) => {
+                // Re-run with heading data
+            });
+        }
+
+        window.onload = startTracking;
+    </script>
+</body>
+</html>
