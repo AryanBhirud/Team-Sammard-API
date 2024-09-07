@@ -71,6 +71,6 @@ router.get("/", (req, res) => {
 router.use('/temperature', temperature);
 router.use('/humidity', humidity);
 router.use('/pressure', pressure);
-router.use('./nav', nav);
+router.use('/nav', nav);
 
 module.exports = router;
